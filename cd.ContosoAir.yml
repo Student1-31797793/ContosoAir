@@ -32,15 +32,12 @@ steps:
     azureResourceManagerConnection: 'Azure Connection'
     subscriptionId: '5284d0c0-b131-4e49-9c49-94647e503897'
     action: 'Create Or Update Resource Group'
-    resourceGroupName: 'rg-lod'
+    resourceGroupName: '$(resourcegroup)'
     location: 'East US'
     templateLocation: 'Linked artifact'
     csmFile: '$(Pipeline.Workspace)/drop/Templates/azuredeploy.json'
     csmParametersFile: '$(Pipeline.Workspace)/drop/Templates/azuredeploy.parameters.json'
-    overrideParameters: |
-      -p_environment $(web_environment) 
-      -p_site_prefix $(web_prefix) 
-      -p_site_web_name $(web_site)
+    overrideParameters: '-p_environment $(web_environment) -p_site_prefix $(web_prefix) -p_site_web_name $(web_site)'
     deploymentMode: 'Incremental'
 - task: AzureRmWebAppDeployment@4
   inputs:
